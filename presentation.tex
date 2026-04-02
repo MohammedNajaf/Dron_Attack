@@ -1,0 +1,142 @@
+\documentclass{beamer}
+\usetheme{Madrid}
+\usecolortheme{default}
+\usepackage{graphicx}
+\usepackage{multimedia} % for video embedding (اختياري)
+
+\title[Drone Defense Lab]{Drone Attack Simulation Laboratory:\\Detection and Automated Interception of Hostile UAV Swarms}
+\subtitle{Standardized Academic Technical Presentation}
+\author{}
+\institute{Advanced Simulation Engineering Group}
+\date{\today}
+
+\begin{document}
+
+% Slide 1: Title
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% Slide 2: Project Description
+\begin{frame}{Project Overview}
+    \begin{block}{Official Project Description}
+        This project details the design, implementation, and evaluation of a Drone Attack Simulation Laboratory. The project creates a safe, cost-effective computational environment to study hostile Unmanned Aerial Vehicle (UAV) swarm behavior and test defensive countermeasures. Using an object-oriented Python architecture and Matplotlib, the simulation models multi-drone approach vectors, establishes a monitored radar zone with probabilistic signal noise, and implements heuristic interception protocols. The laboratory provides a controlled, deterministic virtual environment for analyzing detection rates, interception efficiency, and overall defense capability against asymmetric aerial threats.
+    \end{block}
+\end{frame}
+
+% Slide 3: Objectives and CLO Mapping
+\begin{frame}{Objectives and CLO Mapping}
+    \textbf{Project Objectives}
+    \begin{itemize}
+        \item Model autonomous multi-drone flight trajectories and attack patterns.
+        \item Simulate radar detection with probabilistic noise to mimic real sensors.
+        \item Implement heuristic interception logic that prioritizes threats within range.
+    \end{itemize}
+    \vspace{0.3cm}
+    \textbf{Course Learning Outcomes (CLO)}
+    \begin{itemize}
+        \item \textbf{CLO-1 (Technical \& Management):} Apply Python OOP, simulation design, and project management to build a modular drone defense testbed.
+        \item \textbf{CLO-2 (Problem Solving):} Address real-world asymmetric threats by developing and testing interception strategies in a controlled simulation.
+    \end{itemize}
+\end{frame}
+
+% Slide 4: System Parameters
+\begin{frame}{Standardized System Parameters}
+    \begin{table}
+        \centering
+        \begin{tabular}{|l|l|}
+            \hline
+            \textbf{Parameter} & \textbf{Value} \\
+            \hline
+            Grid Size & $100 \times 100$ \\
+            Target Position & $(50, 50)$ \\
+            Radar Range & 40.0 units \\
+            Defense Radius & 20.0 units \\
+            Detection Error & 0.05 \\
+            Max Interceptions per Tick & 3 drones \\
+            Target Radius & 5.0 units \\
+            \hline
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+% Slide 5: Mathematical Models
+\begin{frame}{Theoretical Framework: Detection and Tracking}
+    \textbf{Detection Model (Distance-based + Gaussian Noise):}
+    \[ S_i = (1 - d_i/40) + \mathcal{N}(0, 0.05) \implies \text{Detect if } S_i > 0.2 \]
+    \vspace{0.3cm}
+    \textbf{Tracking Model (Linear Prediction):}
+    \[ P_{t+1} = P_t + V_t \quad (V_t \text{ from exposed velocity}) \]
+    \vspace{0.3cm}
+    \textbf{Interception Logic:}
+    \[ \text{if } dist \le 20 \implies \text{Intercept (Limit = 3/tick)} \]
+\end{frame}
+
+% Slide 6: Visualization Explanation
+\begin{frame}{Visualization Legend}
+    \begin{itemize}
+        \item \textcolor{green}{\textbullet} \textbf{Green Circle:} Protected Target Base
+        \item \textcolor{blue}{--} \textbf{Blue Dashed:} Radar Range (40u)
+        \item \textcolor{red}{--} \textbf{Red Dashed:} Defense Zone (20u)
+        \item \textbf{Drone States:}
+        \begin{itemize}
+            \item \textcolor{blue}{\textbullet} Blue: Normal (Stealth)
+            \item \textcolor{yellow}{\textbullet} Yellow: Detected / Tracked
+            \item \textbullet \ Black: Intercepted / Neutralized
+            \item \textcolor{red}{\textbullet} Red: Breach
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+% Slide 5: Simulation Demonstration (using static image instead of video)
+\begin{frame}{Simulation Demonstration}
+    \begin{center}
+        \includegraphics[width=1\textwidth]{photo/Lab.png}
+        
+        {\small \textbf{Figure:} Snapshot of the simulation environment showing drone swarm approach and radar coverage.}
+    \end{center}
+    \begin{itemize}
+        \item \textbf{Deterministic Execution:} Reproducible results via seeded random generators.
+        \item \textbf{Dynamic Visualization:} Real-time rendering of swarm approach and interception.
+    \end{itemize}
+\end{frame}
+
+% Slide 7: Performance Results (1)
+\begin{frame}{Results: Detection and Efficiency}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \includegraphics[width=\textwidth]{photo/detection_rate_vs_time.png}
+        \column{0.5\textwidth}
+        \includegraphics[width=\textwidth]{photo/interception_efficiency_vs_time.png}
+    \end{columns}
+\end{frame}
+
+% Slide 8: Performance Results (2)
+\begin{frame}{Results: Breach Count}
+    \begin{center}
+        \includegraphics[width=0.7\textwidth]{photo/breach_count_vs_time.png}
+    \end{center}
+    \begin{itemize}
+        \item Cumulative breaches track direct system failure points.
+        \item 3-drone-per-tick limit creates bottlenecks during saturation attacks.
+    \end{itemize}
+\end{frame}
+
+
+% Slide 8: Limitations and Future Work
+\begin{frame}{Limitations and Future Work}
+    \textbf{Observed Limitations}
+    \begin{itemize}
+        \item \textbf{2D Simplification:} Real-world drone threats operate in 3D space; elevation and altitude changes are not modeled.
+        \item \textbf{Fixed Interceptor Capacity:} Current heuristic caps at 3 targets per tick, which may be insufficient for very large swarms.
+    \end{itemize}
+    \vspace{0.3cm}
+    \textbf{Future Work}
+    \begin{itemize}
+        \item Extend to full 3D simulation using \texttt{mpl\_toolkits.mplot3d} or a dedicated game engine.
+        \item Integrate deep reinforcement learning for predictive interception and adaptive swarm behavior.
+        \item Add support for multiple defensive layers (e.g., jamming, net capture) and cost-benefit analysis.
+    \end{itemize}
+\end{frame}
+
+\end{document}

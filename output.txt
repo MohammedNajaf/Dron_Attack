@@ -1,0 +1,227 @@
+Project Idea Submission Form
+Course Learning Objectives (CLOs)
+Submission evaluation is based on the following core objectives:
+• CLO-1: Apply technical, teamwork, and project management practical skills.
+• CLO-2: Identify and solve real-world problems.
+
+Project Details
+Field
+
+Student Input Area
+
+Project Title:
+
+Drone Attack Simulation Lab
+
+Project Description:
+
+This project creates a safe simulation environment to study
+drone attacks. It helps students understand how drones work
+and how to detect and stop drone threats using technology.
+
+Group Name:
+
+211
+
+Project Group Members (Name, ID):
+
+Project Idea Questionnaire
+Instructions: Please provide comprehensive answers to each question in the "Student Response" column.
+Ensure your responses demonstrate how the project meets the requirements for CLO-1 and CLO-2.
+#
+Questions
+Student Response Column
+Our project develops a drone attack research laboratory. It does not
+1
+What is new in your project? What
+involve real drones but computer simulation. This renders it cheap and
+makes your project different or
+secure. We also take advantage of the modern technology such as
+creative? How does it use new
+drone detection systems and monitoring software.
+technology?
+2
+
+Why should someone invest in your
+project? How does your project help
+save time, money, or reduce the need
+for workers?
+
+Our project assists security teams to train without the use of real
+drones. The actual drone training is costly and hazardous. A simulation
+laboratory is economical in terms of financial resources and time. It
+also enables a number of students to train simultaneously.
+
+3
+
+How does your project help people or
+the community? Does your project
+solve a real problem or make life better
+for others?
+
+The use of drone attacks is an emerging security issue. Through our
+project, people are made to understand how to detect and intercept
+harmful drones. This can be used to defend airports, cities and critical
+buildings.
+
+4
+
+Why did you choose this project?
+What made you interested in this idea?
+Is there a story or reason behind it?
+
+The reason as to why we decided on this project is that the drone
+technology is expanding rapidly. Drones may be employed to do good
+things, and also to attack. We would like to know how to preserve
+people against these dangers.
+
+5
+
+What does your project do? Explain in
+a simple way what your project does
+and how it works.
+
+In our project, we are simulating the attacks of drones with the help of
+a computer. The system demonstrates the movement and attacking of
+the target using drones. Students are able to observe the simulation
+and try the various ways of detecting or stopping the drones.
+
+6
+
+Who is your project for? Who will use
+your project? Why is it useful for them?
+
+It is a student project, research project, and a security team project. It
+assists them in knowing about drone threats. It can be employed in the
+training and learning of drone security.
+
+7
+
+When can your project be used? Is
+your project helpful now, in the future,
+or only at certain times?
+
+This project can be useful both in the present and future. The drone
+technology is increasing annually. Drones threats require the training
+of security teams.
+
+8
+
+How would you build your project?
+What tools, steps, or ideas did you use
+to make your project?
+
+We will develop the project based on simulated software and
+programmes. We can either use Python or a simulation platform of a
+drone. The simulation environment is initially designed. At this point
+we set up drone movement and attack conditions. Lastly, we do
+testing of detection and defense measures.
+
+9
+
+How do you plan to make your
+presentation interesting? What will
+you say or do to make people listen and
+believe in your idea?
+
+We shall demonstrate a real-life simulation. Images and diagrams will
+also be used to describe how drone attacks occur. We will state the
+reasons why training is needed in security.
+
+10
+
+What is the big goal of your project? If
+your project becomes successful, what
+good changes could it bring?
+
+The grand objective is to make people aware and prevent the threats
+of drones. In case the project will be successful, it will be able to
+enhance security training and give significant locations protection
+against drone attacks.
+
+Instructor Grading Rubric (Total Score: 5)
+
+Assessment Criteria
+
+Excellent (1.0 pt.)
+
+Satisfactory (0.6 pt.)
+
+CLO-1: Technical &
+Management
+
+Comprehensive
+detail on tools,
+steps, and project
+management
+strategy.
+Highly effective
+solution for a
+clearly defined realworld problem.
+Project is highly
+unique and
+creative; clearly
+differentiates itself
+from existing
+solutions.
+Clear evidence of
+time/money savings
+and high efficiency
+benefits.
+All 10 questions
+answered
+thoroughly; goals
+are realistic and
+clear.
+
+Mentions some
+tools/steps;
+management plan is
+vague.
+
+Minimal technical details or
+execution plan provided.
+
+Identifies a basic
+problem with a
+standard or generic
+solution.
+Project shows some
+creative elements but
+is similar to existing
+ideas.
+
+Problem is not clearly defined or
+solution is irrelevant.
+
+Moderate evidence of
+practical benefits to
+users or business.
+
+Lacks clear value or fails to show
+efficiency gains.
+
+Most questions
+answered; responses
+lack depth or detail.
+
+Responses are vague; project
+scope is not feasible.
+
+CLO-2: Problem
+Solving
+
+Originality &
+Creativity
+
+Investment Value
+
+Clarity &
+Completeness
+
+Needs Improvement (0.2 pt.)
+
+Project lacks originality or is a
+direct copy of common ideas.
+
+

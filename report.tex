@@ -1,0 +1,192 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{caption}
+\usepackage{hyperref}
+
+\geometry{margin=1in}
+
+\title{\textbf{Drone Attack Simulation Laboratory:\\Detection and Automated Interception of Hostile UAV Swarms}}
+\author{}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This project details the design, implementation, and evaluation of a Drone Attack Simulation Laboratory. The project creates a safe, cost-effective computational environment to study hostile Unmanned Aerial Vehicle (UAV) swarm behavior and test defensive countermeasures. Using an object-oriented Python architecture and Matplotlib, the simulation models multi-drone approach vectors, establishes a monitored radar zone with probabilistic signal noise, and implements heuristic interception protocols. The laboratory provides a controlled, deterministic virtual environment for analyzing detection rates, interception efficiency, and overall defense capability against asymmetric aerial threats.
+\end{abstract}
+
+\section{Introduction}
+The rapid proliferation of commercial and custom-built drones has introduced asymmetric security threats to critical infrastructure such as airports, stadiums, and government facilities. Swarm technologies—where multiple drones coordinate attacks—compound these risks. Developing effective detection and interception strategies is essential, but physical drone training is expensive, hazardous, and logistically complex. 
+
+This simulation laboratory addresses these challenges by providing a controlled, deterministic virtual environment. Students and security trainees can observe drone movements, experiment with radar configurations, and evaluate interception algorithms without real-world consequences. The project leverages modern programming techniques (Python OOP) and visual analytics (Matplotlib) to create an interactive educational tool.
+
+\section{Problem Statement}
+Airspace monitoring systems must continuously track objects and identify intrusions amidst environmental noise and sensor limitations. The core problem addressed in this simulation is the real-time detection of a multi-drone swarm approaching a protected asset located at coordinates \((50,50)\) on a \(100 \times 100\) Cartesian grid. The monitoring logic must:
+\begin{itemize}
+    \item Compute Euclidean distances for each drone.
+    \item Apply probabilistic noise to radar readings (5\% false negative rate).
+    \item Prioritize interception based on hardware capacity (max 3 engagements per tick).
+\end{itemize}
+
+\section{System Parameters}
+The simulation environment is governed by a strict set of global parameters to ensure repeatability and technical consistency. These values are standardized across the Python configuration and this documentation.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Standardized System Parameters}
+    \label{tab:params}
+    \begin{tabular}{|l|l|}
+        \hline
+        \textbf{Parameter} & \textbf{Value} \\
+        \hline
+        Grid Size & $100 \times 100$ \\
+        Target Position & $(50, 50)$ \\
+        Radar Range & 40.0 units \\
+        Defense Radius & 20.0 units \\
+        Detection Error ($\sigma$) & 0.05 \\
+        Max Interceptions per Tick & 3 drones \\
+        Target Radius & 5.0 units \\
+        Max Drones & 15 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\section{System Design}
+The architecture follows an object-oriented paradigm to ensure modularity, scalability, and ease of future enhancements. Figure~\ref{fig:class_diagram} illustrates the core classes and their relationships.
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{photo/Lab.png}
+%     \caption{UML class diagram showing the interaction between \texttt{SwarmEngine}, \texttt{Drone}, \texttt{Radar}, and \texttt{DefenseStrategy} modules.}
+%     \label{fig:class_diagram}
+% \end{figure}
+
+The main modules are:
+\begin{enumerate}
+    \item \textbf{Environment Renderer:} Defines the spatial grid ($100 \times 100$) and places the protected target at $(50,50)$.
+    \item \textbf{Kinematic Engine (\texttt{Swarm}):} Manages up to 15 autonomous drones that spawn at random boundary coordinates and move toward the target. Each drone exposes its velocity vector $(v_x, v_y)$.
+    \item \textbf{Probabilistic Sensor Array (\texttt{Radar}):} Detects drones using a distance-based probability model $P(d) = (1 - d/R) + \mathcal{N}(0, \sigma)$.
+    \item \textbf{Threat Evaluation Logic (\texttt{DefenseStrategy}):} Implements Active Interception (prioritizes closest threats). Engagements occur only within the 20-unit defense radius, with a maximum of three interceptors per tick.
+\end{enumerate}
+
+\section{Mathematical Model}
+The simulation uses fundamental geometric and probabilistic relationships to replicate realistic drone behavior and sensor limitations.
+
+\subsection{Detection Model}
+The probability of a drone $i$ being detected at time $t$ depends on its Euclidean distance $d_i(t)$ and a Gaussian perturbation term. The detection score $S_i(t)$ is calculated as:
+\begin{equation}
+    S_i(t) = \left( 1 - \frac{d_i(t)}{\text{RADAR\_RANGE}} \right) + \eta, \quad \eta \sim \mathcal{N}(0, \text{DETECTION\_ERROR})
+\end{equation}
+A drone is marked as detected if $S_i(t) > 0.2$ and $d_i(t) \le \text{RADAR\_RANGE}$.
+
+\subsection{Tracking Model (Linear Prediction)}
+To maintain persistent state, a linear prediction model is used to estimate the drone's next position $P_{t+1}$ based on its current position $P_t$ and exposed velocity $V_t = (v_x, v_y)$:
+\begin{equation}
+    P_{t+1} = P_t + V_t
+\end{equation}
+This allows the defense system to anticipate threat vectors even during temporary sensor dropouts.
+
+\subsection{Interception Logic}
+The defense system activates when a tracked drone enters the defense radius. The engagement logic is governed by:
+\begin{equation}
+    \text{if } d_i(t) \le \text{DEFENSE\_RADIUS} \implies \text{Intercept}
+\end{equation}
+Subject to the tick-capacity constraint:
+\begin{equation}
+    \text{Count}(t) = \min(\text{Threats}(t), \text{MAX\_INTERCEPTIONS\_PER\_TICK})
+\end{equation}
+
+\subsection{Implementation Pseudocode}
+\begin{verbatim}
+For each simulation tick:
+  1. Update drone positions and calculate current (vx, vy)
+  2. For each drone:
+     distance = distance(pos, target_pos)
+     if distance <= 40.0:
+        score = (1 - distance/40.0) + normal(0, 0.05)
+        if score > 0.2: Mark as detected
+  3. Update tracks using pred_pos = pos + velocity
+  4. Find detected drones where distance <= 20.0
+  5. Sort threats by distance to target
+  6. Intercept up to 3 drones from the sorted list
+  7. Log frame-by-frame performance metrics
+\end{verbatim}
+
+\section{Visualization Explanation}
+The simulation environment uses a standardized color-coded system to represent various entities and their security status:
+
+\begin{itemize}
+    \item \textbf{Green Circle:} The protected central target (Asset).
+    \item \textbf{Blue Dashed Circle:} The Radar Range boundary (40 units).
+    \item \textbf{Red Dashed Circle:} The Defense Zone (20 units).
+    \item \textbf{Drone Identifiers:}
+    \begin{itemize}
+        \item \textcolor{blue}{Blue}: Normal/Stealth mode (not yet detected).
+        \item \textcolor{yellow}{Yellow}: Detected and currently tracked.
+        \item \textbf{Black}: Intercepted and neutralized.
+        \item \textcolor{red}{Red}: Breach (drone reached target).
+    \end{itemize}
+\end{itemize}
+
+\section{Results and Performance Analysis}
+The simulation computes real-time performance metrics to evaluate defense effectiveness. Key indicators include:
+\begin{itemize}
+    \item \textbf{Detection Rate:} detected / total drones.
+    \item \textbf{Interception Efficiency:} intercepted / detected drones.
+    \item \textbf{Breach Count:} Total drones that reached the target.
+\end{itemize}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{photo/detection_rate_vs_time.png}
+    \caption{Detection Rate vs Time: Shows the percentage of the swarm identified as it approaches.}
+    \label{fig:detection_rate}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{photo/interception_efficiency_vs_time.png}
+    \caption{Interception Efficiency: Measures the ratio of neutralized threats to detected threats.}
+    \label{fig:interception_efficiency}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{photo/breach_count_vs_time.png}
+    \caption{Breach Count vs Time: Tracks the failure rate of the defensive layer.}
+    \label{fig:breaches}
+\end{figure}
+
+
+\subsection{Analytical Explanation}
+The results demonstrate several key behaviors:
+\begin{itemize}
+    \item \textbf{Effect of Detection Error:} The 5\% error introduces stochastic delays in target acquisition, requiring the defense system to operate with imperfect information.
+    \item \textbf{System Limitations:} The hardware limit of 3 interceptions per tick creates a bottleneck during high-density swarm surges, leading to occasional breaches.
+    \item \textbf{Performance Behavior:} Efficiency remains high (near 90\%) for moderate swarm densities but degrades as the number of simultaneous threats within the defense radius exceeds the tick capacity.
+\end{itemize}
+
+\section{Limitations and Future Work}
+\subsection*{Observed Limitations}
+\begin{itemize}
+    \item \textbf{2D Simplification:} Real drone threats operate in three dimensions; altitude and elevation changes are not captured.
+    \item \textbf{Static Interception Logic:} The heuristic, while effective, does not adapt to changing swarm tactics.
+    \item \textbf{Fixed Swarm Size:} Current maximum of 15 drones may not reflect very large swarm attacks.
+\end{itemize}
+
+\subsection*{Future Enhancements}
+\begin{itemize}
+    \item Extend to full 3D using \texttt{mpl\_toolkits.mplot3d} or a game engine.
+    \item Integrate reinforcement learning for predictive interception and adaptive swarm behavior.
+    \item Add multiple defensive layers (jamming, net capture) and cost‑benefit analysis.
+    \item Support user‑defined swarm configurations and attack patterns.
+\end{itemize}
+
+\section{Conclusion}
+The Drone Attack Simulation Laboratory successfully provides a low‑cost, scalable platform for studying UAV swarm threats and testing defensive strategies. By combining probabilistic radar modeling, heuristic interception logic, and clear visual output, it meets the educational objectives of CLO-1 and CLO-2. Future work will expand the simulation’s realism and adaptability, further enhancing its value as a training tool for security professionals.
+
+\end{document}

@@ -1,0 +1,22 @@
+========================================
+🚁 INITIALIZING: Drone Attack Simulation Laboratory: Detection and Automated Interception of Hostile UAV Swarms
+========================================
+[ SYSTEM ] Booted Defense Network.
+[ SENSOR ] Radar Range: 40.0
+[ WEAPON ] Defense Radius: 20.0
+[ INTELL ] Incoming swarm size: 15 Drones
+
+Executing spatiotemporal simulation...
+[ INFO ] Performance plots generated in /home/eng-malek/GitHub/simulates-drone-approaching-project/photo
+
+========================================
+📊 POST-SIMULATION CAPABILITY REPORT
+========================================
+Total Drones Invading: 15
+Total Drones Tracked:  15
+Total Neutralized:     15
+Total Target Breaches: 0
+Target Final Health:   100 / 100
+
+System Efficiency Rating: 100.0%
+========================================
